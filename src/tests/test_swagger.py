@@ -21,3 +21,15 @@ def test_openapi_schema_contains_expected_endpoints(openapi_schema):
     assert '/devices/status' in paths
     assert "/devices/{device_id}" in paths
     assert "/devices/{device_id}/command" in paths
+
+def test_post_put_have_request_body(openapi_schema):
+    for path, methods in openapi_schema["paths"].items():
+        for method, op in methods.items():
+            if method.lower() not in {"post", "put", "patch"}:
+                continue
+
+            assert "requestBody" in op, f"{method.upper()} {path} missing requestBody"
+
+            content = op["requestBody"].get("content", {})
+            assert "application/json" in content
+            assert "schema" in content["application/json"]

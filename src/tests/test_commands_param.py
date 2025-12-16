@@ -1,6 +1,4 @@
 import json
-import pytest
-
 
 async def test_send_command_parametrized(app_client, redis_client, device_scenario, command_payload):
     device_id = device_scenario["device_id"]

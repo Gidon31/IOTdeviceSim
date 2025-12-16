@@ -59,17 +59,23 @@ async def redis_client():
         await client.close()
 
 
-
 REDIS_DB = int(os.getenv("REDIS_DB", "0"))
+
 @pytest.fixture(scope="function", autouse=True)
 async def flush_test_db(redis_client):
     db = redis_client.connection_pool.connection_kwargs.get("db")
 
-    assert db == REDIS_DB, f"Refusing to FLUSHDB on db={db}. Expected test db={REDIS_DB}"
+    assert db == REDIS_DB, (
+        f"Refusing to FLUSHDB on db={db}. "
+        f"Expected test db={REDIS_DB}"
+    )
 
     await redis_client.flushdb()
+
     yield
+
     await redis_client.flushdb()
+
 
 @pytest.fixture(scope="session")
 def devices_data_realistic():

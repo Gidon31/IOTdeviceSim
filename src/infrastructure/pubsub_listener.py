@@ -6,10 +6,6 @@ from src.config import logger, DB_HOST, DB_PORT, DEVICE_COMMAND_CHANNEL
 from src.services.commands_service import process_command_message
 
 async def pubsub_listener():
-    """
-    Sets up the Redis Pub/Sub connection and listens forever.
-    This runs as a background task.
-    """
     redis = aioredis.Redis(host=DB_HOST, port=DB_PORT)
     await redis.ping()
     pubsub = redis.pubsub()

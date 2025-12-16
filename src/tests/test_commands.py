@@ -1,4 +1,3 @@
-import pytest
 from starlette.testclient import TestClient
 from src.utils import device_updates_channel
 import json
@@ -40,7 +39,7 @@ def test_post_command_device_not_found(app_client: TestClient):
     assert response.json()['detail'] == f"Device not found: {non_existent_id}"
 
 async def test_send_command_ignores_unknown_fields_and_updates_only_valid(app_client, redis_client):
-    device_id = "1"
+    device_id = "device_100"
     await redis_client.hset(f"device:{device_id}", mapping={"status": "normal", "online": "true"})
 
     payload = {"status": "normal", "hacker_field": "kuku"}
@@ -53,7 +52,7 @@ async def test_send_command_ignores_unknown_fields_and_updates_only_valid(app_cl
 
 
 async def test_command_publishes_event(redis_client, app_client):
-    device_id = "1"
+    device_id = "device_101"
     await redis_client.hset(f"device:{device_id}", mapping={"status": "normal"})
 
     channel = device_updates_channel(device_id)
