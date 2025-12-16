@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7.2-alpine
+    container_name: fastapi-test-redis
+    expose:
+      - "6379"
+    ports:
+      - "6379:6379"
+
+  app:
+    build: .
+    container_name: fastapi-simulator-app
+    ports:
+      - "8008:8008"
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - redis

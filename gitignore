@@ -1,0 +1,42 @@
+# IOTdeviceSim .gitignore
+
+# --- Python bytecode ---
+__pycache__/
+*.py[cod]
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+
+# --- Environment variables ---
+.env
+
+# --- Pytest / testing ---
+.pytest_cache/
+reports/
+coverage.xml
+.coverage
+htmlcov/
+
+# --- Logs ---
+*.log
+
+# --- IDEs ---
+.idea/
+.vscode/
+*.iml
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+
+# --- Docker ---
+*.tar
+
+# --- Redis local data ---
+dump.rdb
+
+# --- Temporary files ---
+*.tmp
+*.swp

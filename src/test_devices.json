@@ -1,0 +1,37 @@
+[
+    {
+        "id": "device-100",
+        "name": "Living Room Thermostat",
+        "type": "thermostat",
+        "status": "active",
+        "online": true
+    },
+    {
+        "id": "device-101",
+        "name": "Kitchen Ceiling Light",
+        "type": "light",
+        "status": "off",
+        "online": true
+    },
+    {
+        "id": "device-102",
+        "name": "Front Door Camera",
+        "type": "camera",
+        "status": "recording",
+        "online": true
+    },
+    {
+        "id": "device-103",
+        "name": "Garage Door Lock",
+        "type": "lock",
+        "status": "locked",
+        "online": false
+    },
+    {
+        "id": "device-104",
+        "name": "Bedroom Outlet Switch",
+        "type": "switch",
+        "status": "on",
+        "online": true
+    }
+]
