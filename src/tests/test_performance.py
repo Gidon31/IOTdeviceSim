@@ -10,7 +10,7 @@ async def test_benchmark_get_devices_populated(app_client, populated_devices, be
         r = app_client.get("/devices")
         assert r.status_code == 200
 
-    benchmark.pedantic(run, rounds=30, warmup_rounds=5)
+    benchmark.pedantic(run, rounds=40, warmup_rounds=5)
 
 async def test_benchmark_send_command(app_client, redis_client, benchmark):
     device_id = "1"

@@ -11,6 +11,7 @@ async def pubsub_listener():
     This runs as a background task.
     """
     redis = aioredis.Redis(host=DB_HOST, port=DB_PORT)
+    await redis.ping()
     pubsub = redis.pubsub()
 
     try:

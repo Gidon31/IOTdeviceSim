@@ -127,7 +127,6 @@ def openapi_schema(app_client: TestClient):
 
     response = app_client.get("/openapi.json")
 
-    # Ensure the request was successful
     if response.status_code != 200:
         pytest.fail(f"Could not retrieve OpenAPI schema: Status {response.status_code}")
 

@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Dict
 
 
 def prepare_device_data(key: str, data: Dict[str, str]) -> Dict[str, str]:

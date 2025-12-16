@@ -7,10 +7,6 @@ OPENAPI_SCHEMA = None
 
 
 def test_openapi_schema_is_valid(openapi_schema):
-    """
-    Validates that the application's exposed schema is structurally valid
-    according to the OpenAPI Specification (OAS) standards.
-    """
     try:
         validate(openapi_schema)
         print("\n--- Swagger: Schema structure is VALID against OpenAPI specification. ---")
