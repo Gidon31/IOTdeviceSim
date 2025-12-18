@@ -8,19 +8,13 @@ def test_loads_devices(devices_data_realistic):
     assert len(devices_data_realistic) > 0
 
 async def test_get_devices_empty_list(app_client: TestClient, redis_client):
-    """
-    Test fetching devices when the database is empty (due to flush_db fixture).
-    Note: The test function itself remains 'async' because 'redis_client' is an async fixture.
-    """
+
     response = app_client.get("/devices")
     assert response.status_code == 200
     assert response.json() == []
 
 async def test_get_devices_returns_populated_data(app_client: TestClient, populated_devices):
-    """
-    Test fetching devices after the database has been populated with test data.
-    Note: The test function itself remains 'async' because 'populated_devices' is an async fixture.
-    """
+
     response = app_client.get("/devices")
 
     assert response.status_code == 200
@@ -37,10 +31,7 @@ async def test_get_devices_returns_populated_data(app_client: TestClient, popula
 
 
 def test_get_device_not_found(app_client: TestClient):
-    """
-    Test 404 response for GET /{device_id} when the device does not exist in Redis.
-    This tests the 'if not await r.exists(full_device_id):' check.
-    """
+
     non_existent_id = "device-not-a-chance"
 
     response = app_client.get(f"/devices/{non_existent_id}")

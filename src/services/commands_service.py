@@ -1,6 +1,6 @@
 import json
 from datetime import datetime
-from typing import Dict, Any
+from typing import Dict
 from src.config import logger
 from src.models import Device
 from src.utils import prepare_for_redis

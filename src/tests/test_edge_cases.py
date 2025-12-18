@@ -1,4 +1,3 @@
-import pytest
 from starlette.testclient import TestClient
 
 
@@ -27,11 +26,7 @@ async def test_send_command_with_boolean_edge_case(app_client, redis_client):
         assert saved["online"] == "false"
 
 async def test_get_devices_handles_corrupted_data(app_client: TestClient, redis_client):
-    """
-    Tests the robustness of the GET /devices endpoint when Redis contains
-    data that FAILS Pydantic validation (e.g., 'type' is missing).
-    The router should gracefully skip the invalid entry and continue.
-    """
+
     corrupt_key = "device:corrupt-001"
     valid_key = "device:valid-002"
 
