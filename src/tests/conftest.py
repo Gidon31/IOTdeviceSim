@@ -3,13 +3,10 @@ import os
 import random
 import pytest
 import redis.asyncio as aioredis
-from asgi_lifespan import LifespanManager
+
 from starlette.testclient import TestClient
-
 from src.app import app
-from src.config import DB_HOST, DB_PORT
-
-REDIS_DB = int(os.getenv("REDIS_DB", "0"))
+from src.config import DB_HOST, DB_PORT, REDIS_DB
 
 
 @pytest.fixture(scope="function")
@@ -18,7 +15,7 @@ async def redis_client():
         host=DB_HOST,
         port=DB_PORT,
         db=REDIS_DB,
-        decode_responses=True,
+        decode_responses=True
     )
     await client.ping()
     try:
@@ -30,7 +27,9 @@ async def redis_client():
 @pytest.fixture(scope="function", autouse=True)
 async def flush_test_db(redis_client):
     db = redis_client.connection_pool.connection_kwargs.get("db")
-    assert db == REDIS_DB, f"Refusing to FLUSHDB on db={db}. Expected test db={REDIS_DB}"
+    assert db == REDIS_DB, (
+        f"Refusing to FLUSHDB on db={db}. Expected test db={REDIS_DB}"
+    )
     await redis_client.flushdb()
     yield
     await redis_client.flushdb()
@@ -40,17 +39,15 @@ async def flush_test_db(redis_client):
 def devices_data_realistic():
     file_path = os.getenv("DEVICES_JSON_PATH")
     if not file_path:
-        pytest.skip("Skipping tests: DEVICES_JSON_PATH is not set")
-
+        pytest.skip("Skipping: DEVICES_JSON_PATH is not set")
     if not os.path.exists(file_path):
-        pytest.skip(f"Skipping tests: Test data file not found at {file_path}")
+        pytest.skip(f"Skipping: devices json not found at {file_path}")
 
     with open(file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     if not isinstance(data, list):
         raise TypeError("JSON file must contain a list of devices.")
-
     return data
 
 
@@ -103,14 +100,12 @@ def command_payload(request):
 
 @pytest.fixture(scope="function")
 def app_client():
-    with LifespanManager(app):
-        with TestClient(app) as client:
-            yield client
+    with TestClient(app) as client:
+        yield client
 
 
 @pytest.fixture(scope="function")
 def openapi_schema(app_client: TestClient):
-    response = app_client.get("/openapi.json")
-    if response.status_code != 200:
-        pytest.fail(f"Could not retrieve OpenAPI schema: Status {response.status_code}")
-    return response.json()
+    resp = app_client.get("/openapi.json")
+    assert resp.status_code == 200, f"Could not retrieve OpenAPI schema: {resp.status_code}"
+    return resp.json()
