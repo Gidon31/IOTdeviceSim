@@ -1,3 +1,4 @@
+import asyncio
 import json
 import os
 import random
@@ -115,7 +116,11 @@ async def populated_devices(redis_client, devices_data_realistic):
 
     return devices_data_realistic
 
-
+@pytest.fixture(scope="session")
+def event_loop():
+    loop = asyncio.new_event_loop()
+    yield loop
+    loop.close()
 
 @pytest.fixture(scope="session")
 async def app_client():
