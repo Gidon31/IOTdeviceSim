@@ -1,4 +1,3 @@
-import pytest
 from starlette.testclient import TestClient
 
 
@@ -39,7 +38,6 @@ def test_get_device_not_found(app_client: TestClient):
     assert response.status_code == 404
     assert response.json()['detail'] == f"Device not found with id: {non_existent_id}"
 
-@pytest.mark.asyncio
 async def test_command_is_idempotent(app_client, redis_client):
 
         await redis_client.hset("device:1", mapping={"status": "normal"})
