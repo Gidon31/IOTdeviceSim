@@ -20,5 +20,6 @@ pytest-html==4.1.1
 asgi-lifespan==2.1.0
 httpx==0.28.1
 openapi-spec-validator==0.7.1
+pytest-benchmark==4.0.0
 
 crefi

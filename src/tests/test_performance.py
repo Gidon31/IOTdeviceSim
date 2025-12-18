@@ -1,3 +1,6 @@
+import pytest
+pytestmark = pytest.mark.performance
+
 def test_benchmark_get_devices_empty(app_client, benchmark):
     def run():
         r = app_client.get("/devices")
