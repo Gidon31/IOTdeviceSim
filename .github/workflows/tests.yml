@@ -1,4 +1,4 @@
-name: Tests
+name: Tests CI WorkFlow
 
 on:
   push:
@@ -6,7 +6,8 @@ on:
   pull_request:
 
 jobs:
-  test:
+  api-tests:
+    name: Run API & Integration Tests (Tests CI WorkFlow)
     runs-on: ubuntu-latest
 
     services:
