@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  redis-master:
+    image: redis:7-alpine
+    container_name: redis-master
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "/etc/redis/redis-master.conf"]
+    volumes:
+      - ./redis_ha/redis-master.conf:/etc/redis/redis-master.conf:ro
+
+  redis-replica:
+    image: redis:7-alpine
+    container_name: redis-replica
+    depends_on:
+      - redis-master
+    ports:
+      - "6380:6379"
+    command: ["redis-server", "/etc/redis/redis-replica.conf"]
+    volumes:
+      - ./redis_ha/redis-replica.conf:/etc/redis/redis-replica.conf:ro
+
+  redis-sentinel:
+    image: redis:7-alpine
+    container_name: redis-sentinel
+    depends_on:
+      - redis-master
+      - redis-replica
+    ports:
+      - "26379:26379"
+    command: ["redis-sentinel", "/etc/redis/sentinel.conf"]
+    volumes:
+      - ./redis_ha/sentinel.conf:/etc/redis/sentinel.conf:ro
