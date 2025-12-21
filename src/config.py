@@ -33,3 +33,8 @@ APP_PORT = int(os.getenv("APP_PORT", "8000"))
 APP_RELOAD = os.getenv("APP_RELOAD", "false").lower() in ("true", "1", "t")
 
 DEVICE_COMMAND_CHANNEL = os.getenv("DEVICE_COMMAND_CHANNEL", "device_commands")
+
+
+USE_REDIS_SENTINEL = os.getenv("USE_REDIS_SENTINEL", "false").lower() in ("true", "1", "t")
+REDIS_SENTINELS = os.getenv("REDIS_SENTINELS", "redis-sentinel:26379")
+REDIS_MASTER_NAME = os.getenv("REDIS_MASTER_NAME", "mymaster")
