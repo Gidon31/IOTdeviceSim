@@ -11,7 +11,6 @@ NO_CLEAN = os.getenv("SEED_NO_CLEAN", "false").lower() in ("true", "1", "t")
 
 
 async def clear_devices(r):
-    """Deletes all device and device history keys."""
     deleted = 0
 
     async for key in r.scan_iter(match="device:*"):
@@ -22,7 +21,7 @@ async def clear_devices(r):
         await r.delete(key)
         deleted += 1
 
-    print(f"🧹 Cleared {deleted} Redis keys")
+    print(f"Cleared {deleted} Redis keys")
 
 
 async def seed_database():
