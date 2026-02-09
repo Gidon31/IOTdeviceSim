@@ -28,4 +28,3 @@ async def get_device(device_id: str, r: redis.Redis = Depends(get_redis)):
 @router.post("/{device_id}/command", response_model=ReturnObject)
 async def send_command(device_id: str, command: dict, r: redis.Redis = Depends(get_redis)):
     return await apply_command(r, device_id, command)
-from typing import List

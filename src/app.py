@@ -1,13 +1,15 @@
 import asyncio
 from contextlib import asynccontextmanager
+import os
+
 import uvicorn
 from fastapi import FastAPI
+
 from src.config import APP_HOST, APP_PORT, APP_RELOAD, APP_LOG_LEVEL
 from src.routers.device import router as device_router
 from src.infrastructure.pubsub_listener import pubsub_listener
-import os
 
-
+from fastapi_mcp import FastApiMCP
 
 
 listener_task = None
@@ -32,6 +34,10 @@ async def lifespan(_app: FastAPI):
 
 app = FastAPI(title="IOT device simulator", lifespan=lifespan)
 app.include_router(device_router)
+
+mcp = FastApiMCP(app)
+
+mcp.mount_http()
 
 
 if __name__ == "__main__":
